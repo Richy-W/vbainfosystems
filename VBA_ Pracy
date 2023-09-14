@@ -1,0 +1,35 @@
+Sub Grader()
+    Dim r As Integer
+    Dim bmonth As Integer
+    Dim major As String
+    Dim grade As Integer
+     
+    'input
+    r = Range("B3").Value
+    bmonth = Range("B4").Value
+    major = Range("B5").Value
+    
+    
+    'processing
+    
+    If r = 1 Then
+        grade = grade + 20
+    ElseIf r = 2 Then
+        grade = grade + 10
+    Else
+        grade = grade + 0
+    End If
+    
+    grade = grade + (bmonth * 5)
+    
+    If major = "IS" Then
+        grade = grade + 20
+    Else
+        grade = grade + 10
+    End If
+    
+    'output
+    
+    Range("B7").Value = grade
+    
+End Sub
