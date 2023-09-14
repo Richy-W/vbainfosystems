@@ -1,0 +1,27 @@
+Sub hotel()
+    Dim m As String, n As Integer, rr As Currency
+    Dim dr As Single, c As Currency
+    
+    'input
+    m = Range("D9").Value
+    n = Range("D10").Value
+    rr = Range("D11").Value
+    
+    
+    'processing
+    If m = "Gold" Then
+        dr = 0.25
+    ElseIf m = "Silver" Then
+        dr = 0.15
+    ElseIf m = "Dung" Then
+        dr = 0.05
+    Else
+        dr = 0
+    End If
+    
+    c = (rr * (1 - dr)) * n
+    
+    'outputs
+    
+    Range("D17").Value = c
+End Sub
