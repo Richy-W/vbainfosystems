@@ -1,0 +1,34 @@
+Sub GoodJudgment()
+Dim NOC As Integer
+
+'input
+NOC = InputBox("How many cookies would you like?")
+
+'processing
+If NOC > 12 Then
+'output
+    MsgBox ("If you eat these, you will be sick.")
+Else
+    MsgBox ("Your body can handle this.")
+
+End If
+
+End Sub
+
+
+Sub daisyDecision()
+Dim petals As Integer
+
+'input
+petals = InputBox("How many petals are on the flower?")
+
+'processing
+If petals Mod 2 Then
+    MsgBox ("The person loves you!")
+
+Else
+    MsgBox ("The person loves you not.")
+
+End If
+
+End Sub
