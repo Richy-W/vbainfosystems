@@ -1,0 +1,29 @@
+Sub loops()
+Dim num As Integer
+num = 1
+Range("B1").Activate
+ Do Until num = 26
+    ActiveCell.Value = num
+    num = num + 1
+    ActiveCell.Offset(1, 0).Activate
+ Loop
+End Sub
+
+Sub namecombos()
+Dim fname As Range
+Dim lname As Range
+Dim first As String
+Dim last As String
+Dim row As Integer
+row = 5
+Range("J5").Activate
+For Each fname In Range(Range("J5"), Range("J5").End(xlDown))
+    first = fname.Value
+    For Each lname In Range(Range("K5"), Range("K5").End(xlDown))
+        last = lname.Value
+        Cells(row, "N").Value = first
+        Cells(row, "O").Value = last
+        row = row + 1
+    Next
+Next
+End Sub
