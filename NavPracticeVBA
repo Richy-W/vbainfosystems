@@ -1,0 +1,12 @@
+Sub nav()
+Range("A1").Activate
+ActiveCell.Offset(3, 2).Activate
+ActiveCell.Value = "Richard"
+ActiveCell.Offset(3, -2).Activate
+ActiveCell.Value = "Wren"
+ActiveCell.End(xlUp).Activate
+ActiveCell.Value = "Ashby"
+Sheets("Sheet2").Activate
+ActiveCell.Value = "Computer Science"
+End Sub
+
