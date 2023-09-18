@@ -1,0 +1,194 @@
+Option Explicit
+
+Sub EstSingle()
+'declare variables
+
+Dim PPBR As Currency, EHP As Single
+Dim P As Integer, H As Single
+Dim NS As Integer, NL As Integer
+Dim OH As Single
+Dim OC As Currency, BP As Currency
+Dim TP As Currency
+
+'set variables to 0
+NS = 0
+NL = 0
+BP = 0
+OH = 0
+OC = 0
+TP = 0
+
+
+'Collect Inputs
+PPBR = Range("C22").Value
+EHP = Range("C23").Value
+
+'Customer Inputs
+P = Range("C9").Value
+H = Range("C10").Value
+
+'right number of people
+If P >= 20 And P <= 120 Then
+
+    'find the right number of busses
+    If P >= 20 And P <= 25 Then
+        NS = 1
+        NL = 0
+    ElseIf P < 25 And P < 51 Then
+        NS = 2
+        NL = 0
+    ElseIf P > 50 And P < 61 Then
+        NS = 0
+        NL = 1
+    ElseIf P > 60 And P < 86 Then
+        NS = 1
+        NL = 1
+    Else
+        NS = 0
+        NL = 2
+        
+    End If
+    
+        
+    'find overtime hours subtracking 5 hours for to insure the first 5 hours are not overcharged
+        If H > 5 Then
+            OH = H - 5
+            If OH > 4 Then
+                OH = 4
+            End If
+            
+        Else
+          OH = 0
+          
+        End If
+          
+        'calculate pricing
+        
+        BP = P * PPBR
+        OC = BP * OH * EHP
+        TP = BP + OC
+        
+        
+    
+Else
+'Send error message to user
+    MsgBox ("You must have between 20 and 120 people to schedule a tour")
+    
+End If
+        'Output to spreadsheet
+        
+        Range("C13").Value = NS
+        Range("C14").Value = NL
+        Range("C15").Value = BP
+        Range("C16").Value = OH
+        Range("C17").Value = OC
+        Range("C18").Value = TP
+
+End Sub
+
+
+Sub EstBatch()
+'declare variables
+Dim PPBR As Currency, EHP As Single
+Dim N As String, D As Date
+Dim P As Integer, H As Single
+Dim NS As Integer, NL As Integer
+Dim OH As Single
+Dim OC As Currency, BP As Currency
+Dim TP As Currency
+
+'set variables to 0
+NS = 0
+NL = 0
+BP = 0
+OH = 0
+OC = 0
+TP = 0
+
+
+'Collect Inputs
+PPBR = Sheets("User Form").Range("C22").Value
+EHP = Sheets("User Form").Range("C23").Value
+
+'go to batch input tab
+Sheets("Batch Input").Activate
+Range("A1").Activate
+
+'start do loop
+Do Until IsEmpty(ActiveCell)
+    'Customer Inputs
+    N = ActiveCell.Value
+    D = ActiveCell.Offset(0, 1).Value
+    P = ActiveCell.Offset(1, 0).Value
+    H = ActiveCell.Offset(2, 0).Value
+    
+'Find number of busses
+        If P >= 20 And P <= 25 Then
+            NS = 1
+            NL = 0
+        ElseIf P < 25 And P < 51 Then
+            NS = 2
+            NL = 0
+        ElseIf P > 50 And P < 61 Then
+            NS = 0
+            NL = 1
+        ElseIf P > 60 And P < 86 Then
+            NS = 1
+            NL = 1
+        Else
+            NS = 0
+            NL = 2
+            
+        End If
+        
+            
+        'find overtime hours subtracking 5 hours for to insure the first 5 hours are not overcharged
+            If H > 5 Then
+                OH = H - 5
+                If OH > 4 Then
+                    OH = 4
+                End If
+                
+            Else
+              OH = 0
+              
+            End If
+              
+            'calculate pricing
+            
+            BP = P * PPBR
+            OC = BP * OH * EHP
+            TP = BP + OC
+            
+            
+        
+            'Output to spreadsheet
+            If IsEmpty(Worksheets("Batch Output").Range("A2")) Then
+                Worksheets("Batch Output").Range("A2").Value = N
+                Worksheets("Batch Output").Range("B2").Value = D
+                Worksheets("Batch Output").Range("C2").Value = P
+                Worksheets("Batch Output").Range("D2").Value = H
+                Worksheets("Batch Output").Range("E2").Value = PPBR
+                Worksheets("Batch Output").Range("F2").Value = EHP
+                Worksheets("Batch Output").Range("G2").Value = NS
+                Worksheets("Batch Output").Range("H2").Value = NL
+                Worksheets("Batch Output").Range("I2").Value = BP
+                Worksheets("Batch Output").Range("J2").Value = OH
+                Worksheets("Batch Output").Range("K2").Value = OC
+                Worksheets("Batch Output").Range("L2").Value = TP
+                
+            Else
+                Worksheets("Batch Output").Range("A1").End(xlDown).Offset(1, 0).Value = N
+                Worksheets("Batch Output").Range("B1").End(xlDown).Offset(1, 0).Value = D
+                Worksheets("Batch Output").Range("C1").End(xlDown).Offset(1, 0).Value = P
+                Worksheets("Batch Output").Range("D1").End(xlDown).Offset(1, 0).Value = H
+                Worksheets("Batch Output").Range("E1").End(xlDown).Offset(1, 0).Value = PPBR
+                Worksheets("Batch Output").Range("F1").End(xlDown).Offset(1, 0).Value = EHP
+                Worksheets("Batch Output").Range("G1").End(xlDown).Offset(1, 0).Value = NS
+                Worksheets("Batch Output").Range("H1").End(xlDown).Offset(1, 0).Value = NL
+                Worksheets("Batch Output").Range("I1").End(xlDown).Offset(1, 0).Value = BP
+                Worksheets("Batch Output").Range("J1").End(xlDown).Offset(1, 0).Value = OH
+                Worksheets("Batch Output").Range("K1").End(xlDown).Offset(1, 0).Value = OC
+                Worksheets("Batch Output").Range("L1").End(xlDown).Offset(1, 0).Value = TP
+            End If
+            
