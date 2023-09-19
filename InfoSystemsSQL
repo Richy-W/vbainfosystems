@@ -1,0 +1,60 @@
+SELECT lname, perf, salary
+FROM emp
+JOIN pos ON emp.posid = pos.posid
+WHERE title LIKE '%Manager'
+ORDER BY salary ASC
+
+
+SELECT fname, lname, hdate, title, salary
+FROM emp
+JOIN pos ON emp.posid = pos.posid
+WHERE gender = 'M'
+AND (fname LIKE 'J%' OR fname LIKE 'B%')
+AND hdate >= '2000-12-09'
+AND salary >35000
+
+
+SELECT lname, city, perf, state
+FROM emp
+JOIN loc ON emp.locid = loc.locid
+WHERE (state = 'CA' OR state = 'FL' OR state = 'WA')
+    AND perf != 'Fair'
+ORDER BY lname
+
+
+SELECT ssn, city, perf
+FROM emp
+JOIN loc ON emp.locid = loc.locid
+WHERE ssn LIKE '7%' AND (perf = 'Fair' OR perf = 'Good')
+   OR city = 'Boston'
+ORDER BY city
+
+
+SELECT city, maxsal, salary, (maxsal - salary) AS difference
+FROM emp
+JOIN pos ON emp.posid = pos.posid
+JOIN loc ON loc.locid = emp.locid
+WHERE title = 'Sales Manager'
+ORDER BY difference DESC
+
+
+SELECT lname, hdate, salary, title
+FROM emp
+JOIN pos ON emp.posid = pos.posid
+WHERE title = 'Trainee' AND hdate > '1999-12-31' AND salary BETWEEN 18000 AND 25000
+    OR hdate < '1995-01-01'
+ORDER BY hdate ASC
+
+
+SELECT state, SUM(salary) AS totalSal
+FROM loc
+JOIN emp ON loc.locid = emp.locid
+GROUP BY State
+ORDER BY totalSal DESC
+
+
+SELECT state, SUM(salary) AS totalSal
+FROM loc
+JOIN emp ON loc.locid = emp.locid
+GROUP BY State
+ORDER BY totalSal DESC
